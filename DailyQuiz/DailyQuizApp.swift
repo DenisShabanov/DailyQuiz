@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct DailyQuizApp: App {
+    
+    @State private var viewModel = QuizViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
+                .environment(viewModel)
         }
     }
 }
