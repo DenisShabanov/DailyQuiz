@@ -49,7 +49,7 @@ enum ResultText {
 struct ResultQuizCardView: View {
     let correctCount: Int
     let totalCount: Int
-    var onRestart: (() -> Void)? = nil // Можно не передавать
+    var onRestart: (() -> Void)? = nil
     @State var showButton: Bool
 
     var body: some View {
@@ -62,7 +62,7 @@ struct ResultQuizCardView: View {
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 52, height: 52)
-                        .foregroundColor(index < correctCount ? .yellow : .gray)
+                        .foregroundColor(index < correctCount ? .theme.yellowColor : .theme.disable)
                 }
             }
 

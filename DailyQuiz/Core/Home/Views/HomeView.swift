@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(QuizViewModel.self)
+    private var vm
+    
     @State private var startQuiz: Bool = false
     @State private var isLoading: Bool = false
     @State private var showQuizView: Bool = false
     @State private var showHistoryScreen: Bool = false
+    @State private var loadError: Bool = false
     
     var body: some View {
         ZStack{
@@ -32,6 +36,11 @@ struct HomeView: View {
                     Spacer()
                     Image("logo").padding(.vertical, 40)
                     welcomeCard
+                    if loadError == true {
+                        Text("Ошибка! Попробуйте ещё раз")
+                            .font(.headline)
+                            .foregroundStyle(Color.theme.white)
+                    }
                     Spacer()
                     Spacer()
                     Spacer()
@@ -39,9 +48,17 @@ struct HomeView: View {
                 .onChange(of: startQuiz) {
                     if startQuiz {
                         isLoading = true
+                        loadError = false
+                        vm.fetchQuizData()
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                             isLoading = false
-                            showQuizView = true
+                            if vm.hasLoadError {
+                                loadError = true
+                                startQuiz = false
+                            } else {
+                                showQuizView = true
+                            }
                         }
                     }
                 }

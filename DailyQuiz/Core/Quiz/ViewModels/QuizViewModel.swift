@@ -24,6 +24,8 @@ class QuizViewModel {
     var shuffledAnswers: [[String]] = []
     var isQuizCompleted: Bool = false
     
+    var hasLoadError: Bool = false
+    
     
     var selectedAnswers: [String?] = []
     
@@ -54,6 +56,15 @@ class QuizViewModel {
     
     func fetchQuizData() {
         quizDataService.getAnswers()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                guard let self = self else { return }
+                if self.allAnswers.isEmpty {
+                    self.hasLoadError = true
+                } else {
+                    self.hasLoadError = false
+                }
+            }
     }
     
     private func prepareShuffledAnswers() {

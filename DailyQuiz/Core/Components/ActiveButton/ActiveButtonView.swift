@@ -13,9 +13,6 @@ enum ButtonOptional {
 }
 
 struct ActiveButtonView: View {
-    @Environment(QuizViewModel.self)
-    private var vm
-    
     @Binding
     var isTapped: Bool
     let buttonText: String = "Начать викторину"
@@ -23,7 +20,6 @@ struct ActiveButtonView: View {
     var body: some View {
         Button {
             isTapped.toggle()
-            vm.fetchQuizData()
         } label: {
             Text(buttonText.uppercased())
                 .foregroundStyle(Color.theme.white)
@@ -43,5 +39,4 @@ struct ActiveButtonView: View {
 
 #Preview {
     ActiveButtonView(isTapped: .constant(false))
-        .environment(DeveloperPreview.instance.vm)
 }

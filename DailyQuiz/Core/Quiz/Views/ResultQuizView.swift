@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-
-
 struct ResultQuizView: View {
     @Environment(QuizViewModel.self) private var viewModel
     @Binding var showQuizView: Bool

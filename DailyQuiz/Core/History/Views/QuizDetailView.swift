@@ -45,7 +45,7 @@ struct QuizDetailView: View {
                     }
                     .padding()
                     .frame(width: 340, height: 443)
-                    .background(Color.white)
+                    .background(Color.theme.white)
                     .clipShape(RoundedRectangle(cornerRadius: 46))
                     .multilineTextAlignment(.center)
                    

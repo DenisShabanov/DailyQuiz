@@ -68,7 +68,7 @@ extension HistoryView {
                 dismiss()
             }) {
                 Image(systemName: "chevron.left")
-                    .foregroundColor(.white)
+                    .foregroundColor(Color.theme.white)
                     .padding()
                     .font(.headline)
             }
@@ -128,7 +128,7 @@ extension HistoryView {
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 16, height: 16)
-                        .foregroundColor(index < quiz.correctAnswers ? .yellow : .gray)
+                        .foregroundColor(index < quiz.correctAnswers ? .theme.yellowColor : .theme.disable)
                     
                 }
             }
