@@ -12,17 +12,17 @@ struct QuizAnswerRow: View {
     let selected: Int
     
     var body: some View {
-            ForEach(question.answers.indices, id: \.self) { answerIndex in
-                let isCorrect = answerIndex == question.correctAnswerIndex
-                let isSelected = answerIndex == selected
-                
-                ResultAnswerLineView(
-                    answer: question.answers[answerIndex],
-                    isSelected: isSelected,
-                    isCorrect: isCorrect
-                )
-            }
+        ForEach(question.answers.indices, id: \.self) { answerIndex in
+            let isCorrect = answerIndex == question.correctAnswerIndex
+            let isSelected = answerIndex == selected
+            
+            ResultAnswerLineView(
+                answer: question.answers[answerIndex],
+                isSelected: isSelected,
+                isCorrect: isCorrect
+            )
         }
+    }
 }
 
 

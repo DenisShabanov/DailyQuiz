@@ -1,3 +1,10 @@
+//
+//  QuizDetailView.swift
+//  DailyQuiz
+//
+//  Created by Denis Shabanov on 01.08.2025.
+//
+
 import SwiftUI
 
 struct QuizDetailView: View {
@@ -48,7 +55,7 @@ struct QuizDetailView: View {
                     .background(Color.theme.white)
                     .clipShape(RoundedRectangle(cornerRadius: 46))
                     .multilineTextAlignment(.center)
-                   
+                    
                 }
                 NextButtonView(isEnabled: true, buttonText: "Начать заново", action: { dismiss()
                     showHistoryScreen = false

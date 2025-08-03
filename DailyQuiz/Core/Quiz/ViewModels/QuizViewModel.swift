@@ -57,7 +57,7 @@ class QuizViewModel {
     func fetchQuizData() {
         quizDataService.getAnswers()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 guard let self = self else { return }
                 if self.allAnswers.isEmpty {
                     self.hasLoadError = true
@@ -194,7 +194,7 @@ class QuizViewModel {
                 date: date,
                 totalQuestions: questions.count,
                 correctAnswers: Int(entity.correctAnswers),
-                difficulty: "", // если хочешь, можешь добавить эти поля в Core Data
+                difficulty: "",
                 category: "",
                 questions: questions,
                 selectedAnswers: selectedAnswers

@@ -1,3 +1,10 @@
+//
+//  NextButtonView.swift
+//  DailyQuiz
+//
+//  Created by Denis Shabanov on 01.08.2025.
+//
+
 import SwiftUI
 
 struct NextButtonView: View {

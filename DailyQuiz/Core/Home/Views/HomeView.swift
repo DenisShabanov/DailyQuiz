@@ -77,7 +77,7 @@ struct HomeView: View {
         .environment(DeveloperPreview.instance.vm)
 }
 
-//Sub View
+//MARK: Sub View
 extension HomeView {
     
     private var welcomeCard: some View {

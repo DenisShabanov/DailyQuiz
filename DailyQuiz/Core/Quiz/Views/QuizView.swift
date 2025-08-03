@@ -1,9 +1,18 @@
+//
+//  QuizView.swift
+//  DailyQuiz
+//
+//  Created by Denis Shabanov on 01.08.2025.
+//
+
 import SwiftUI
 
 struct QuizView: View {
     @Environment(QuizViewModel.self)
     private var viewModel
     @Binding var showQuizView: Bool
+    @State private var isTimerRunning: Bool = true
+    @State private var timeIsUp: Bool = false
     
     var body: some View {
         ZStack {
@@ -23,7 +32,8 @@ struct QuizView: View {
                 
                 if viewModel.allAnswers.isEmpty {
                     ProgressView("Загрузка вопросов...")
-                        .frame(width: 340, height: 548)
+                        .frame(width: 340, height: 580)
+                        .foregroundStyle(Color.theme.white)
                 } else if viewModel.isQuizCompleted {
                     ResultQuizView(showQuizView: $showQuizView)
                 } else {
@@ -32,7 +42,16 @@ struct QuizView: View {
                 }
                 Spacer()
             }
+            .disabled(timeIsUp)
             .padding(.horizontal, 26)
+            if timeIsUp {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                    .transition(.opacity)
+                
+                ifTimeIsUp
+                    .transition(.scale)
+            }
         }
     }
 }
@@ -65,6 +84,12 @@ extension QuizView {
                 let answer = viewModel.allAnswers[index]
                 let options = viewModel.shuffledAnswers[index]
                 
+                QuizTimerView(isRunning: $isTimerRunning) {
+                    withAnimation {
+                        timeIsUp = true
+                    }
+                    isTimerRunning = false
+                }
                 Text("Вопрос \(index + 1) из \(viewModel.allAnswers.count)")
                     .font(.headline)
                     .fontWeight(.bold)
@@ -73,21 +98,17 @@ extension QuizView {
                 
                 Text(answer.question?.cleanedHTMLString ?? "")
                     .foregroundStyle(Color.black)
-                    .font(.title2)
+                    .font(.headline)
                     .fontWeight(.semibold)
-                    .padding(.horizontal, 15)
-                    .padding(.bottom, 20)
-                
+                    .padding(.horizontal)
                 ForEach(options, id: \.self) { option in
-                    AnswerLineView(answer: option, isSelected: viewModel.selectedAnswer == option,)
+                    AnswerLineView(answer: option.cleanedHTMLString, isSelected: viewModel.selectedAnswer == option,)
                         .padding(.vertical, 4)
                         .onTapGesture {
                             viewModel.selectAnswer(option)
                         }
                 }
-                
-                Spacer()
-                
+            
                 NextButtonView(
                     isEnabled: viewModel.selectedAnswer != nil,
                     buttonText: index >= viewModel.allAnswers.count - 1 ? "Завершить Тест" : "Далее",
@@ -95,7 +116,7 @@ extension QuizView {
                         viewModel.nextQuestion()
                     }
                 )
-                .padding(.vertical, 40)
+                .padding(.vertical)
             } else {
                 ProgressView("Загрузка вопроса...")
                     .frame(width: 340, height: 548)
@@ -112,5 +133,26 @@ extension QuizView {
             .font(.caption)
             .foregroundStyle(Color.theme.white)
             .padding()
+    }
+    
+    private var ifTimeIsUp: some View {
+        VStack(alignment: .center, spacing: 20) {
+            Text("Время вышло!")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(Color.black)
+            Text("Вы не успели завершить викторину. Попробоуйте ещё раз")
+                .font(.headline)
+                .foregroundColor(Color.black)
+            
+            NextButtonView(isEnabled: true, buttonText: "Начать заново", action: {
+                showQuizView = false
+            })
+        }
+        .padding()
+        .frame(width: 360, height: 233)
+        .background(Color.theme.white)
+        .cornerRadius(46)
+        .multilineTextAlignment(.center)
     }
 }

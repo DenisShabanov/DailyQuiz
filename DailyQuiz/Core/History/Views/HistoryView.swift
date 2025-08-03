@@ -181,8 +181,6 @@ extension HistoryView {
         }
     }
     
-    
-    
     private var footerLogo: some View {
         VStack {
             Spacer()
